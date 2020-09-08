@@ -1,27 +1,81 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+@extends('welcome')
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ route('index') }}">Produkty <span class="sr-only">(current)</span></a>
-            </li>
-        </ul>
-{{--        <form class="form-inline my-2 my-lg-0">--}}
-{{--            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">--}}
-{{--            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>--}}
-{{--        </form>--}}
-    </div>
-    <div >
-        <a href="{{ route('shoppingCart') }}">Nákupní košík
-            <img class="pl-1" id="shoping_cart" src="{{ URL::to('/images/icons/cart.svg') }}">
-            <span id="shoppingCartCounter">
-                {{ \Illuminate\Support\Facades\Session::has('cart') ?
-                    \Illuminate\Support\Facades\Session::get('cart')->getTotalItems() : '' }}
-            </span>
-        </a>
-    </div>
-</nav>
+@section('content')
+    @if(!empty($products))
+
+        <div class="wrap cf">
+            <div class="heading cf">
+                <h1>Můj košík</h1>
+                <a href="{{ route('index') }}" class="continue">Pokračovat v nákupu</a>
+            </div>
+            <div class="cart">
+                <ul class="cartWrap">
+                    @foreach($products as $product)
+                        @if($loop->even)
+                            <li class="items even">
+                        @else
+                            <li class="items odd">
+                        @endif
+
+                        <div class="infoWrap">
+                            <div class="cartSection">
+                                <img src="http://lorempixel.com/output/technics-q-c-300-300-4.jpg" alt="" class="itemImg" />
+        {{--                        <p class="itemNumber">#QUE-007544-002</p>--}}
+                                <h3>{{ $product['product']->name }}</h3>
+
+{{--                                <p> <input type="text" value="{{ $product['totalProductQuantity'] }}" class="qty"/> x {{ $product['product']->price }} {{$product['product']->currency->currency_code}}</p>--}}
+{{--                                <p> <input type="number" value="{{ $product['totalProductQuantity'] }}" class="qty"/> x {{ $product['product']->price }} {{$product['product']->currency->currency_code}}</p>--}}
+                                <div class="number-spinner-sml spinner" data-productId="{{ $product['product']->id }}">
+                                    <span class="ns-btn-sml">
+                                        <a data-dir="dwn"><span class="icon-minus-sml"></span></a>
+                                    </span>
+                                    <input type="text" class="pl-ns-value" value="{{$product['totalProductQuantity']}}" maxlength=6>
+                                    <span class="ns-btn-sml">
+                                        <a data-dir="up"><span class="icon-plus-sml"></span></a>
+                                    </span>
+                                </div>
+                                <div>
+                                    <p> x {{ $product['product']->price }} {{$product['product']->currency->currency_code}}</p>
+                                </div>
+                                {{--                        <p class="stockStatus"> In Stock</p>--}}
+                            </div>
+
+
+                            <div class="prodTotal cartSection">
+                                <p>{{ $product['totalProductPrice'] }} {{$product['product']->currency->currency_code}}</p>
+                            </div>
+                            <div class="cartSection removeWrap">
+                                <a href="#" class="remove_product" data-productId="{{$product['product']->id}}">x</a>
+                            </div>
+                        </div>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <div class="promoCode"><label for="promo">Have A Promo Code?</label><input type="text" name="promo" placholder="Enter Code" />
+                <a href="#" class="btn"></a></div>
+
+            <div class="subtotal cf">
+                <ul>
+        {{--            <li class="totalRow"><span class="label">Subtotal</span><span class="value">$35.00</span></li>--}}
+
+        {{--            <li class="totalRow"><span class="label">Shipping</span><span class="value">$5.00</span></li>--}}
+
+        {{--            <li class="totalRow"><span class="label">Tax</span><span class="value">$4.00</span></li>--}}
+                    <li class="totalRow"><span class="label">Celkové množství</span><span class="value">{{ $totalQuantity }} Ks</span></li>
+                    <li class="totalRow final"><span class="label">Celková cena</span><span class="value">{{ $totalPrice }}</span></li>
+                    <div class="heading cf">
+                        <li class="totalRow"><a href="#" class="btn continue"><button type="submit">Odelsat objednávku</button></a></li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+
+    @else
+        <div id="empty_basket">
+            <h1>Váš košík je prázdný</h1>
+        </div>
+    @endif
+
+@endsection

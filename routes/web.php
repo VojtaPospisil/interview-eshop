@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::get('/', 'ProductsController@index')->name('index');
+
+Route::post('/product/addToBasket', 'ProductsController@addProduct');
+Route::get('/shoppingCart', 'ShoppingCartController@index')->name('shoppingCart');
+Route::get('/product/{id}/remove', 'ShoppingCartController@remove')->name('remove');
+Route::post('/product/quantityChange', 'ShoppingCartController@quantityChange')->name('quantityChange');
+Route::post('/placeOrder', 'ShoppingCartController@placeOrder')->name('placeOrder');
