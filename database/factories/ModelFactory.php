@@ -28,18 +28,18 @@ use Illuminate\Support\Str;
 //    ];
 //});
 
-$factory->define(\App\Currency::class, function (Faker $faker) {
-    return [
-        'currency' => $faker->text,
-        'price' => $faker->boolean,
-    ];
-});
-
-$factory->define(Products::class, function (Faker $faker) {
-    return [
-        'name' => $faker->text(10),
-        'description' => $faker->text,
-        'currency_id' => $faker->numberBetween($min = 1, $max = 2),
-        'price' => $faker->numberBetween($min = 10, $max = 100),
-    ];
-});
+//$factory->define(\App\Currency::class, function (Faker $faker) {
+//    return [
+//        'currency' => $faker->text,
+//        'price' => $faker->boolean,
+//    ];
+//});
+//
+//$factory->define(Products::class, function (Faker $faker) {
+//    return [
+//        'name' => $faker->text(10),
+//        'description' => $faker->text,
+//        'currency_id' => $faker->numberBetween($min = 1, $max = 2),
+//        'price' => $faker->numberBetween($min = 10, $max = 100),
+//    ];
+//});

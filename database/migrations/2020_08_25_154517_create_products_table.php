@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->longText('description');
             $table->boolean('price');
-            $table->integer('currency_id')->unsigned()->index();
+//            $table->integer('currency_id')->unsigned()->index();
 //            $table->foreign('currency_id')->references('id')->on('currencies');
             $table->timestamps();
         });
